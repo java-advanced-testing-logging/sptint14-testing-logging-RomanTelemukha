@@ -2,8 +2,10 @@ package com.softserve.itacademy.controller;
 
 import com.softserve.itacademy.dto.todoDto.CreateToDoDto;
 import com.softserve.itacademy.dto.todoDto.ToDoDtoConverter;
+import com.softserve.itacademy.dto.todoDto.UpdateToDoDto;
 import com.softserve.itacademy.model.ToDo;
 import com.softserve.itacademy.model.User;
+import com.softserve.itacademy.service.TaskService;
 import com.softserve.itacademy.service.ToDoService;
 import com.softserve.itacademy.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
@@ -30,6 +32,9 @@ public class ToDoControllerTest {
 
     @MockBean
     private ToDoService todoService;
+
+    @MockBean
+    private TaskService taskService;
 
     @MockBean
     private UserService userService;

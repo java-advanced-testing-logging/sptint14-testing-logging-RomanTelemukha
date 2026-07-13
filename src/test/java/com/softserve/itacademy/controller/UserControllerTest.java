@@ -2,6 +2,7 @@ package com.softserve.itacademy.controller;
 
 import com.softserve.itacademy.dto.userDto.CreateUserDto;
 import com.softserve.itacademy.dto.userDto.UpdateUserDto;
+import com.softserve.itacademy.dto.userDto.UserDtoConverter;
 import com.softserve.itacademy.model.User;
 import com.softserve.itacademy.model.UserRole;
 import com.softserve.itacademy.service.UserService;
@@ -28,6 +29,9 @@ public class UserControllerTest {
 
     @MockBean
     private UserService userService;
+
+    @MockBean
+    private UserDtoConverter userDtoConverter;
 
     @Test
     void createGet_ShouldReturnCreateUserView() throws Exception {
