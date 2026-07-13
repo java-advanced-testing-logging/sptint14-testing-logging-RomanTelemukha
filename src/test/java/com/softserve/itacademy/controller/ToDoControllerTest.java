@@ -60,9 +60,11 @@ public class ToDoControllerTest {
 
         when(userService.readById(1L)).thenReturn(owner);
         when(todoDtoConverter.toEntity(any(CreateToDoDto.class), any(User.class))).thenReturn(todo);
+        when(todoService.create(any(ToDo.class))).thenReturn(todo);
 
         mockMvc.perform(post("/todos/create/users/1")
-                        .param("title", "New ToDo Submission"))
+                        .param("title", "New ToDo Submission")
+                        .param("ownerId", "1"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/todos/all/users/1"));
 
@@ -91,7 +93,8 @@ public class ToDoControllerTest {
         when(todoService.create(any(ToDo.class))).thenThrow(new IllegalArgumentException("Title already exists"));
 
         mockMvc.perform(post("/todos/create/users/1")
-                        .param("title", "Duplicate Title"))
+                        .param("title", "Duplicate Title")
+                        .param("ownerId", "1"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("create-todo"))
                 .andExpect(model().attribute("ownerId", 1L))

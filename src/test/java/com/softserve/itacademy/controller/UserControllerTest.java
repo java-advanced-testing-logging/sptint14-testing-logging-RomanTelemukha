@@ -53,7 +53,8 @@ public class UserControllerTest {
                         .param("firstName", "John")
                         .param("lastName", "Doe")
                         .param("email", "john@mail.com")
-                        .param("password", "123456"))
+                        .param("password", "123456")
+                        .param("role", "USER"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/todos/all/users/1"));
 
@@ -80,7 +81,8 @@ public class UserControllerTest {
                         .param("firstName", "John")
                         .param("lastName", "Doe")
                         .param("email", "AlreadyExists@mail.com")
-                        .param("password", "123456"))
+                        .param("password", "123456")
+                        .param("role", "USER"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("create-user"))
                 .andExpect(model().hasErrors());
@@ -120,7 +122,10 @@ public class UserControllerTest {
 
     @Test
     void updatePost_ShouldRedirect_WhenValid() throws Exception {
+        when(userService.update(any(UpdateUserDto.class))).thenReturn(new com.softserve.itacademy.dto.userDto.UserDto());
+
         mockMvc.perform(post("/users/1/update")
+                        .param("id", "1")
                         .param("firstName", "JohnUpdated")
                         .param("lastName", "DoeUpdated")
                         .param("email", "john@mail.com")
