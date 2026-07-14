@@ -197,7 +197,7 @@ public class ToDoControllerTest {
         ToDo todo = new ToDo();
         todo.setId(2L);
         todo.setOwner(owner);
-        todo.setCollaborators(new java.util.HashSet<>());
+        todo.setCollaborators(new HashSet<>());
         todo.setTasks(new HashSet<>());
 
         when(todoService.readById(2L)).thenReturn(todo);

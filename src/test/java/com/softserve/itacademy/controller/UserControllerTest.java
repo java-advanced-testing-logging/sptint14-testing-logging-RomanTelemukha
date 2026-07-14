@@ -2,6 +2,7 @@ package com.softserve.itacademy.controller;
 
 import com.softserve.itacademy.dto.userDto.CreateUserDto;
 import com.softserve.itacademy.dto.userDto.UpdateUserDto;
+import com.softserve.itacademy.dto.userDto.UserDto;
 import com.softserve.itacademy.dto.userDto.UserDtoConverter;
 import com.softserve.itacademy.model.User;
 import com.softserve.itacademy.model.UserRole;
@@ -13,7 +14,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -53,7 +54,7 @@ public class UserControllerTest {
                         .param("firstName", "John")
                         .param("lastName", "Doe")
                         .param("email", "john@mail.com")
-                        .param("password", "123456")
+                        .param("password", "tele123456")
                         .param("role", "USER"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/todos/all/users/1"));
@@ -122,12 +123,12 @@ public class UserControllerTest {
 
     @Test
     void updatePost_ShouldRedirect_WhenValid() throws Exception {
-        when(userService.update(any(UpdateUserDto.class))).thenReturn(new com.softserve.itacademy.dto.userDto.UserDto());
+        when(userService.update(any(UpdateUserDto.class))).thenReturn(new UserDto());
 
         mockMvc.perform(post("/users/1/update")
                         .param("id", "1")
-                        .param("firstName", "JohnUpdated")
-                        .param("lastName", "DoeUpdated")
+                        .param("firstName", "Jonathan")
+                        .param("lastName", "Berkley")
                         .param("email", "john@mail.com")
                         .param("role", "USER"))
                 .andExpect(status().is3xxRedirection())
@@ -159,7 +160,7 @@ public class UserControllerTest {
 
     @Test
     void getAll_ShouldReturnUsersListView() throws Exception {
-        when(userService.getAll()).thenReturn(new ArrayList<>());
+        when(userService.getAll()).thenReturn(List.of());
 
         mockMvc.perform(get("/users/all"))
                 .andExpect(status().isOk())
@@ -168,7 +169,7 @@ public class UserControllerTest {
     }
 
     @Test
-    void shouldHandleEntityNotFoundException() throws Exception {
+    void read_ShouldReturn404_WhenEntityNotFound() throws Exception {
         when(userService.readById(999L)).thenThrow(new EntityNotFoundException("User with id 999 not found"));
 
         mockMvc.perform(get("/users/999/read"))
